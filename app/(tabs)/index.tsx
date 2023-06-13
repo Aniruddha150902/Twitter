@@ -4,7 +4,7 @@ import Tweet from '../../components/Tweet';
 export default function TabOneScreen() {
   return (
     <View style={styles.page}>
-      <FlatList data={tweets} renderItem={({item})=><Tweet tweet={item}/>}/>
+      <FlatList data={tweets} renderItem={({item})=><Tweet tweet={item} /*a={"111"}*//>}/>
     </View>
   );
 }

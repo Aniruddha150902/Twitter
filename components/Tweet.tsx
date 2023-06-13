@@ -1,6 +1,12 @@
 import { View,Text,Image,StyleSheet } from "react-native"
 import tweets from "../assets/data/tweets";
-const Tweet=({tweet}:{tweet:any})=>{
+import { tweetType,userType } from "../types";
+type propsType={
+    tweet:tweetType
+    // a:string
+}
+const Tweet=({tweet/*,a*/}:propsType/*:{tweet:any}*/)=>{
+    // console.log(tweet.user.image?.toUpperCase())
     return (
         <View style={styles.container}>
             <Image source={{uri:tweet.user.image}} style={styles.imagestyle}/>
