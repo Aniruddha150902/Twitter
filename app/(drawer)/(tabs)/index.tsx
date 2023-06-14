@@ -1,7 +1,7 @@
 import { StyleSheet,View,FlatList } from 'react-native';
 import {Link} from 'expo-router';
-import tweets from '../../assets/data/tweets';
-import Tweet from '../../components/Tweet';
+import tweets from '../../../assets/data/tweets';
+import Tweet from '../../../components/Tweet';
 import { Entypo } from '@expo/vector-icons';
 export default function TabOneScreen() {
   return (
