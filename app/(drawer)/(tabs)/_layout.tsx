@@ -7,6 +7,9 @@ import Colors from "../../../constants/Colors";
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
+export const unstable_settings = {
+  initialRouteName: "(feeds)",
+};
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -17,12 +20,13 @@ function TabBarIcon(props: {
 const AvatharHeader = () => {
   const navigation = useNavigation();
   return (
+    // @ts-ignore
     <Pressable onPress={() => navigation.openDrawer()}>
       <Image
         source={{
           uri: "https://pbs.twimg.com/profile_images/1590968738358079488/IY9Gx6Ok.jpg",
         }}
-        style={{ width: 40, aspectRatio: 1, borderRadius: 40, margin: 10 }}
+        style={{ width: 30, aspectRatio: 1, borderRadius: 40, marginLeft: 10 }}
       />
     </Pressable>
   );
@@ -38,9 +42,9 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="(feeds)"
         options={{
-          title: "Tab One",
+          title: "Feeds",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
