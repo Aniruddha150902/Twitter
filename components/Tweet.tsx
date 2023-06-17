@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  useColorScheme,
+} from "react-native";
 import tweets from "../assets/data/tweets";
 import { tweetType, userType } from "../types";
 import { Entypo } from "@expo/vector-icons";
@@ -10,13 +17,20 @@ type propsType = {
 };
 const Tweet = ({ tweet /*,a*/ }: propsType /*:{tweet:any}*/) => {
   // console.log(tweet.user.image?.toUpperCase())
+  const colorScheme = useColorScheme();
+  // Determine the background color based on the color scheme
+  const backgroundColor = colorScheme === "dark" ? "black" : "white";
+  // Determine the text color based on the color scheme
+  const textColor = colorScheme === "dark" ? "white" : "black";
   return (
     <Link href={`/tweet/${tweet.id}`} asChild>
       <Pressable style={styles.container}>
         <Image source={{ uri: tweet.user.image }} style={styles.userimage} />
         <View style={styles.maincontainer}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.name}>{tweet.user.name}</Text>
+            <Text style={{ fontWeight: "600", color: textColor }}>
+              {tweet.user.name}
+            </Text>
             <Text style={styles.username}>{tweet.user.username} · 2h</Text>
             <Entypo
               name="dots-three-horizontal"
@@ -25,7 +39,9 @@ const Tweet = ({ tweet /*,a*/ }: propsType /*:{tweet:any}*/) => {
               marginLeft="auto"
             />
           </View>
-          <Text style={styles.content}>{tweet.content}</Text>
+          <Text style={{ lineHeight: 20, marginTop: 5, color: textColor }}>
+            {tweet.content}
+          </Text>
           {tweet.image && (
             <Image source={{ uri: tweet.image }} style={styles.image} />
           )}
@@ -57,13 +73,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
-  name: {
-    fontWeight: "600",
-  },
-  content: {
-    lineHeight: 20,
-    marginTop: 5,
-  },
+  // name: {},
+  // content: {},
   image: {
     width: "100%",
     // height:'100%',

@@ -1,11 +1,21 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, useColorScheme } from "react-native";
 import { Link } from "expo-router";
 import tweets from "../../../../assets/data/tweets";
 import Tweet from "../../../../components/Tweet";
 import { Entypo } from "@expo/vector-icons";
 export default function TabOneScreen() {
+  const colorScheme = useColorScheme();
+  // Determine the background color based on the color scheme
+  const backgroundColor = colorScheme === "dark" ? "black" : "white";
+  // Determine the text color based on the color scheme
+  const textColor = colorScheme === "dark" ? "white" : "black";
   return (
-    <View style={styles.page}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: backgroundColor,
+      }}
+    >
       <FlatList
         data={tweets}
         renderItem={({ item }) => <Tweet tweet={item} /*a={"111"}*/ />}
@@ -22,10 +32,7 @@ export default function TabOneScreen() {
   );
 }
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    backgroundColor: "white",
-  },
+  // page: {},
   floatingplus: {
     backgroundColor: "#1D9AF1",
     borderRadius: 25,
