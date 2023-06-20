@@ -23,7 +23,7 @@ const Tweet = ({ tweet /*,a*/ }: propsType /*:{tweet:any}*/) => {
   // Determine the text color based on the color scheme
   const textColor = colorScheme === "dark" ? "white" : "black";
   return (
-    <Link href={`/tweet/${tweet.id}`} asChild>
+    <Link href={`/feeds/tweet/${tweet.id}`} asChild>
       <Pressable style={styles.container}>
         <Image source={{ uri: tweet.user.image }} style={styles.userimage} />
         <View style={styles.maincontainer}>

@@ -13,7 +13,7 @@ export default function FeedLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen
           name="tweet/[id]"
-          options={{ title: "Tweet" /*headerShown:false*/ }}
+          options={{ title: "Tweet", headerShown: false }}
         />
       </Stack>
     </ThemeProvider>

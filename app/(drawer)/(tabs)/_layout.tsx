@@ -12,7 +12,7 @@ import Colors from "../../../constants/Colors";
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 export const unstable_settings = {
-  initialRouteName: "(feeds)",
+  initialRouteName: "feeds",
 };
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -47,7 +47,7 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
-          name="(feeds)"
+          name="feeds"
           options={{
             title: "Feeds",
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
