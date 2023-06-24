@@ -1,8 +1,9 @@
 import { Text, useColorScheme } from "react-native";
 import Tweet from "../../../../../components/Tweet";
-import tweets from "../../../../../assets/data/tweets";
 import { useSearchParams } from "expo-router";
 import { View } from "../../../../../components/Themed";
+import { useQuery } from "@tanstack/react-query";
+import { getTweet } from "../../../../../lib/API/tweets";
 export default () => {
   const colorScheme = useColorScheme();
   // Determine the background color based on the color scheme
@@ -10,11 +11,15 @@ export default () => {
   // Determine the text color based on the color scheme
   const textColor = colorScheme === "dark" ? "white" : "black";
   const { id } = useSearchParams();
-  const tweet = tweets.find((t) => t.id === id);
-  if (!tweet) return <Text>Tweet {id} not found!</Text>;
+  const { data } = useQuery({
+    queryKey: ["tweet", id],
+    queryFn: () => getTweet(id as string),
+  });
+
+  if (!data) return <Text>Tweet {id} not found!</Text>;
   return (
     <View style={{ flex: 1, backgroundColor: backgroundColor }}>
-      <Tweet tweet={tweet} />
+      <Tweet tweet={data} />
     </View>
   );
 };
