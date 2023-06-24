@@ -1,14 +1,39 @@
-import { StyleSheet, View, FlatList, useColorScheme } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  useColorScheme,
+  ActivityIndicator,
+  Text,
+} from "react-native";
 import { Link } from "expo-router";
-import tweets from "../../../../assets/data/tweets";
+// import tweets from "../../../../assets/data/tweets";
 import Tweet from "../../../../components/Tweet";
 import { Entypo } from "@expo/vector-icons";
-export default function TabOneScreen() {
+// import { useEffect, useState } from "react";
+import listTweets from "../../../../lib/API/tweets";
+import { useQuery } from "@tanstack/react-query";
+// import tweets from "../../../../assets/data/tweets";
+export default function FeedScreen() {
   const colorScheme = useColorScheme();
   // Determine the background color based on the color scheme
   const backgroundColor = colorScheme === "dark" ? "black" : "white";
   // Determine the text color based on the color scheme
   const textColor = colorScheme === "dark" ? "white" : "black";
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["tweets"],
+    queryFn: listTweets,
+  });
+  // const [tweets, setTweets] = useState([]);
+  // useEffect(() => {
+  //   const fetchTweets = async () => {
+  //     const res = await listTweets();
+  //     setTweets(res);
+  //   };
+  //   fetchTweets();
+  // }, []);
+  if (isLoading) return <ActivityIndicator />;
+  if (error instanceof Error) return <Text>{error.message}</Text>;
   return (
     <View
       style={{
@@ -17,7 +42,7 @@ export default function TabOneScreen() {
       }}
     >
       <FlatList
-        data={tweets}
+        data={data}
         renderItem={({ item }) => <Tweet tweet={item} /*a={"111"}*/ />}
       />
       <Link href={"/newtweet"} asChild>
