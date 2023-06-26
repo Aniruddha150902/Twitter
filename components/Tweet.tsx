@@ -11,17 +11,13 @@ import { tweetType, userType } from "../types";
 import { Entypo } from "@expo/vector-icons";
 import IconButton from "./IconButtton";
 import { Link } from "expo-router";
+import useColorStyles from "../Theme";
 type propsType = {
   tweet: tweetType;
   // a:string
 };
 const Tweet = ({ tweet /*,a*/ }: propsType /*:{tweet:any}*/) => {
-  // console.log(tweet.user.image?.toUpperCase())
-  const colorScheme = useColorScheme();
-  // Determine the background color based on the color scheme
-  const backgroundColor = colorScheme === "dark" ? "black" : "white";
-  // Determine the text color based on the color scheme
-  const textColor = colorScheme === "dark" ? "white" : "black";
+  const { backgroundColor, textColor } = useColorStyles();
   return (
     <Link href={`/feeds/tweet/${tweet.id}`} asChild>
       <Pressable style={styles.container}>

@@ -12,7 +12,8 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { DrawerActions } from "@react-navigation/native";
+// import { DrawerActions } from "@react-navigation/native";
+import useColorStyles from "../../Theme";
 const DrawerNavigation = createDrawerNavigator().Navigator;
 const Drawer = withLayoutContext(DrawerNavigation);
 export const unstable_settings = {
@@ -21,11 +22,7 @@ export const unstable_settings = {
 // https://github.com/react-navigation/react-navigation/issues/6790
 // @ts-ignore
 function CustomDrawerContent(props) {
-  const colorScheme = useColorScheme();
-  // Determine the background color based on the color scheme
-  const backgroundColor = colorScheme === "dark" ? "black" : "white";
-  // Determine the text color based on the color scheme
-  const textColor = colorScheme === "dark" ? "white" : "black";
+  const { backgroundColor, textColor } = useColorStyles();
   return (
     <DrawerContentScrollView {...props}>
       <Text style={{ alignSelf: "center", fontSize: 20, color: textColor }}>

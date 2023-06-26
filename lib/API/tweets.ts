@@ -22,3 +22,17 @@ export async function getTweet(id: string) {
   if (res.status !== 200) throw new Error("Error Fetching the Tweet");
   return await res.json();
 }
+export async function createTweet(data: { content: string }) {
+  const res = await fetch(`${API_URL}/tweet`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${AUTH}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (res.status === 401 || res.status === 400)
+    throw new Error("Unauthorized!Please sign in");
+  if (res.status !== 200) throw new Error("Error Posting the Tweet");
+  return await res.json();
+}

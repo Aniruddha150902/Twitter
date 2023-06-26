@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   View,
   Text,
@@ -7,10 +8,14 @@ import {
   TextInput,
   SafeAreaView,
   useColorScheme,
+  ActivityIndicator,
 } from "react-native";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
-import { color } from "react-native-reanimated";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTweet } from "../lib/API/tweets";
+// import tweets from "../assets/data/tweets";
+import useColorStyles from "../Theme";
 const user = {
   id: "u1",
   username: "elonmusk",
@@ -19,18 +24,34 @@ const user = {
     "https://pbs.twimg.com/profile_images/1590968738358079488/IY9Gx6Ok.jpg",
 };
 export default () => {
+  const { backgroundColor, textColor } = useColorStyles();
   const [text, setText] = useState("");
   const router = useRouter();
-  const tweetsubmit = () => {
-    console.warn("Posting the Tweet: " + text);
-    setText("");
-    router.back();
+  const queryClient = useQueryClient();
+  const { mutateAsync, isLoading, isError, error } = useMutation({
+    mutationFn: createTweet,
+    onSuccess: (data) => {
+      // queryClient.invalidateQueries({
+      //   queryKey: ["tweets"],
+      // });
+      queryClient.setQueriesData(["tweets"], (existingData) => {
+        // console.log(data);
+        // console.log(existingData);
+        return [data, ...existingData];
+      });
+    },
+  });
+  const tweetsubmit = async () => {
+    // console.warn("Posting the Tweet: " + text);
+    try {
+      await mutateAsync({ content: text });
+      setText("");
+      router.back();
+    } catch (e) {
+      const err = e as Error;
+      console.log("Error Posting the tweet : " + err.message);
+    }
   };
-  const colorScheme = useColorScheme();
-  // Determine the background color based on the color scheme
-  const backgroundColor = colorScheme === "dark" ? "black" : "white";
-  // Determine the text color based on the color scheme
-  const textColor = colorScheme === "dark" ? "white" : "black";
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: backgroundColor }}>
       <View style={styles.container}>
@@ -42,6 +63,7 @@ export default () => {
             <Text style={styles.tweetText}>Tweet</Text>
           </Pressable>
         </View>
+        {isLoading && <ActivityIndicator />}
         <View style={styles.tweetContainer}>
           <Image source={{ uri: user.image }} style={styles.image} />
           <TextInput
@@ -58,6 +80,7 @@ export default () => {
             }}
           />
         </View>
+        {isError && <Text>"Error Posting the tweet : "+error</Text>}
       </View>
     </SafeAreaView>
   );

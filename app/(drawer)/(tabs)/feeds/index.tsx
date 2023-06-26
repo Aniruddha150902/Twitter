@@ -14,12 +14,9 @@ import { Entypo } from "@expo/vector-icons";
 import listTweets from "../../../../lib/API/tweets";
 import { useQuery } from "@tanstack/react-query";
 // import tweets from "../../../../assets/data/tweets";
+import useColorStyles from "../../../../Theme";
 export default function FeedScreen() {
-  const colorScheme = useColorScheme();
-  // Determine the background color based on the color scheme
-  const backgroundColor = colorScheme === "dark" ? "black" : "white";
-  // Determine the text color based on the color scheme
-  const textColor = colorScheme === "dark" ? "white" : "black";
+  const { backgroundColor, textColor } = useColorStyles();
   const { data, isLoading, error } = useQuery({
     queryKey: ["tweets"],
     queryFn: listTweets,

@@ -4,12 +4,9 @@ import { useSearchParams } from "expo-router";
 import { View } from "../../../../../components/Themed";
 import { useQuery } from "@tanstack/react-query";
 import { getTweet } from "../../../../../lib/API/tweets";
+import useColorStyles from "../../../../../Theme";
 export default () => {
-  const colorScheme = useColorScheme();
-  // Determine the background color based on the color scheme
-  const backgroundColor = colorScheme === "dark" ? "black" : "white";
-  // Determine the text color based on the color scheme
-  const textColor = colorScheme === "dark" ? "white" : "black";
+  const { backgroundColor, textColor } = useColorStyles();
   const { id } = useSearchParams();
   const { data } = useQuery({
     queryKey: ["tweet", id],
