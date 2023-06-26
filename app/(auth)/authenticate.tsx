@@ -1,11 +1,28 @@
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 import { useSearchParams } from "expo-router";
+import { authenticate } from "../../lib/API/auth";
 const Authenticate = () => {
   const [code, setCode] = useState("");
   const { email } = useSearchParams();
-  const onSignIn = async () => {
-    console.warn("Sign in : ", email, code);
+  const onConfirm = async () => {
+    // console.warn("Sign in : ", email, code);
+    try {
+      if (typeof email !== "string") return;
+      const emailToken = code;
+      const res = await authenticate({ email, emailToken });
+      console.log(res);
+    } catch (e) {
+      const err = e as Error;
+      Alert.alert("Error : count not verify " + err.message);
+    }
   };
   return (
     <View style={styles.container}>
@@ -16,7 +33,7 @@ const Authenticate = () => {
         value={code}
         onChangeText={setCode}
       />
-      <Pressable style={styles.button} onPress={onSignIn}>
+      <Pressable style={styles.button} onPress={onConfirm}>
         <Text style={styles.buttonText}>confirm</Text>
       </Pressable>
     </View>
