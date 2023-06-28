@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTweet } from "../lib/API/tweets";
+import { useTweetsApi } from "../lib/API/tweets";
 // import tweets from "../assets/data/tweets";
 import useColorStyles from "../Theme";
 const user = {
@@ -27,6 +27,7 @@ export default () => {
   const { backgroundColor, textColor } = useColorStyles();
   const [text, setText] = useState("");
   const router = useRouter();
+  const { createTweet } = useTweetsApi();
   const queryClient = useQueryClient();
   const { mutateAsync, isLoading, isError, error } = useMutation({
     mutationFn: createTweet,

@@ -3,10 +3,12 @@ import Tweet from "../../../../../components/Tweet";
 import { useSearchParams } from "expo-router";
 import { View } from "../../../../../components/Themed";
 import { useQuery } from "@tanstack/react-query";
-import { getTweet } from "../../../../../lib/API/tweets";
+import { useTweetsApi } from "../../../../../lib/API/tweets";
 import useColorStyles from "../../../../../Theme";
 export default () => {
   const { backgroundColor, textColor } = useColorStyles();
+  //@ts-ignore
+  const { getTweet } = useTweetsApi();
   const { id } = useSearchParams();
   const { data } = useQuery({
     queryKey: ["tweet", id],

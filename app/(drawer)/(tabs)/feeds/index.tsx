@@ -11,12 +11,14 @@ import { Link } from "expo-router";
 import Tweet from "../../../../components/Tweet";
 import { Entypo } from "@expo/vector-icons";
 // import { useEffect, useState } from "react";
-import listTweets from "../../../../lib/API/tweets";
+import { useTweetsApi } from "../../../../lib/API/tweets";
 import { useQuery } from "@tanstack/react-query";
 // import tweets from "../../../../assets/data/tweets";
 import useColorStyles from "../../../../Theme";
 export default function FeedScreen() {
   const { backgroundColor, textColor } = useColorStyles();
+  //@ts-ignore
+  const { listTweets } = useTweetsApi();
   const { data, isLoading, error } = useQuery({
     queryKey: ["tweets"],
     queryFn: listTweets,
@@ -39,6 +41,7 @@ export default function FeedScreen() {
       }}
     >
       <FlatList
+        //@ts-ignore
         data={data}
         renderItem={({ item }) => <Tweet tweet={item} /*a={"111"}*/ />}
       />

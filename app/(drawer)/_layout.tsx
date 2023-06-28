@@ -4,7 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Text, useColorScheme } from "react-native";
+import { Text, useColorScheme, ActivityIndicator } from "react-native";
 import { withLayoutContext, useNavigation } from "expo-router";
 import {
   createDrawerNavigator,
@@ -14,6 +14,7 @@ import {
 } from "@react-navigation/drawer";
 // import { DrawerActions } from "@react-navigation/native";
 import useColorStyles from "../../Theme";
+import { useAuth } from "../../context/AuthContext";
 const DrawerNavigation = createDrawerNavigator().Navigator;
 const Drawer = withLayoutContext(DrawerNavigation);
 export const unstable_settings = {
@@ -34,6 +35,11 @@ function CustomDrawerContent(props) {
 }
 export default () => {
   const colorScheme = useColorScheme();
+  //@ts-ignore
+  const { authToken } = useAuth();
+  if (!authToken) {
+    return <ActivityIndicator />;
+  }
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Drawer drawerContent={(props) => <CustomDrawerContent {...props} />}>
