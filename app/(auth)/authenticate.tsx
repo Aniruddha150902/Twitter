@@ -14,13 +14,13 @@ const Authenticate = () => {
   const [code, setCode] = useState("");
   const { email } = useSearchParams();
   //@ts-ignore
-  const { setAuthToken } = useAuth();
+  const { updateAuthToken } = useAuth();
   const onConfirm = async () => {
     // console.warn("Sign in : ", email, code);
     if (typeof email !== "string") return;
     try {
       const res = await authenticate({ email, emailToken: code });
-      setAuthToken(res.authcode);
+      updateAuthToken(res.authcode);
     } catch (e) {
       const err = e as Error;
       Alert.alert("Error : count not verify " + err.message);
