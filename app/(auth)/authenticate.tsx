@@ -9,16 +9,18 @@ import {
 import React, { useState } from "react";
 import { useSearchParams } from "expo-router";
 import { authenticate } from "../../lib/API/auth";
+import { useAuth } from "../../context/AuthContext";
 const Authenticate = () => {
   const [code, setCode] = useState("");
   const { email } = useSearchParams();
+  //@ts-ignore
+  const { setAuthToken } = useAuth();
   const onConfirm = async () => {
     // console.warn("Sign in : ", email, code);
+    if (typeof email !== "string") return;
     try {
-      if (typeof email !== "string") return;
-      const emailToken = code;
-      const res = await authenticate({ email, emailToken });
-      console.log(res);
+      const res = await authenticate({ email, emailToken: code });
+      setAuthToken(res.authcode);
     } catch (e) {
       const err = e as Error;
       Alert.alert("Error : count not verify " + err.message);

@@ -6,9 +6,10 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { Children, useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthContextProvider from "../context/AuthContext";
 const client = new QueryClient();
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,28 +46,30 @@ function RootLayoutNav() {
 
   return (
     <>
-      <QueryClientProvider client={client}>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <Stack>
-            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-            <Stack.Screen
-              name="newtweet"
-              options={{ title: "New Tweet", headerShown: false }}
-            />
-            <Stack.Screen
-              name="(auth)/signIn"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="(auth)/authenticate"
-              options={{ title: "Confirm" }}
-            />
-          </Stack>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <AuthContextProvider>
+        <QueryClientProvider client={client}>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Stack>
+              <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+              <Stack.Screen
+                name="newtweet"
+                options={{ title: "New Tweet", headerShown: false }}
+              />
+              <Stack.Screen
+                name="(auth)/signIn"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="(auth)/authenticate"
+                options={{ title: "Confirm" }}
+              />
+            </Stack>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </AuthContextProvider>
     </>
   );
 }
