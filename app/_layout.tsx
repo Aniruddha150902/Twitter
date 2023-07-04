@@ -6,11 +6,14 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { Children, useEffect } from "react";
+import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthContextProvider from "../context/AuthContext";
 import TweetsApiContextProvider from "../lib/API/tweets";
+import UserApiContextProvider from "../lib/API/user";
+// import ThemeContextProvider from "../context/ThemeContext";
+// import { useTheme } from "../context/ThemeContext";
 const client = new QueryClient();
 export {
   // Catch any errors thrown by the Layout component.
@@ -43,42 +46,51 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  // const darkTheme = useTheme();
   const colorScheme = useColorScheme();
 
   return (
     <>
+      {/* <ThemeContextProvider> */}
       <AuthContextProvider>
-        <TweetsApiContextProvider>
-          <QueryClientProvider client={client}>
-            <ThemeProvider
-              value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-            >
-              <Stack>
-                <Stack.Screen
-                  name="(drawer)"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="modal"
-                  options={{ presentation: "modal" }}
-                />
-                <Stack.Screen
-                  name="newtweet"
-                  options={{ title: "New Tweet", headerShown: false }}
-                />
-                <Stack.Screen
-                  name="(auth)/signIn"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="(auth)/authenticate"
-                  options={{ title: "Confirm" }}
-                />
-              </Stack>
-            </ThemeProvider>
-          </QueryClientProvider>
-        </TweetsApiContextProvider>
+        <UserApiContextProvider>
+          <TweetsApiContextProvider>
+            <QueryClientProvider client={client}>
+              <ThemeProvider
+                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+              >
+                <Stack>
+                  <Stack.Screen
+                    name="(drawer)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="modal"
+                    options={{ presentation: "modal" }}
+                  />
+                  <Stack.Screen
+                    name="newtweet"
+                    options={{ title: "New Tweet", headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="(auth)/signUp"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="(auth)/signIn"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="(auth)/authenticate"
+                    options={{ title: "Confirm" }}
+                  />
+                </Stack>
+              </ThemeProvider>
+            </QueryClientProvider>
+          </TweetsApiContextProvider>
+        </UserApiContextProvider>
       </AuthContextProvider>
+      {/* </ThemeContextProvider> */}
     </>
   );
 }

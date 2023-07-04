@@ -12,6 +12,9 @@ import { login } from "../../lib/API/auth";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const router = useRouter();
+  const onSignup = () => {
+    router.push({ pathname: "/signUp" });
+  };
   const onSignIn = async () => {
     // console.warn("Sign in : ", email);
     try {
@@ -19,21 +22,29 @@ const SignIn = () => {
       router.push({ pathname: "/authenticate", params: { email } });
     } catch (e) {
       const err = e as Error;
-      Alert.alert("Error : could not sign in " + err.message);
+      Alert.alert("Error : Please Create An Accound " + err.message);
     }
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Sign in or Create an Account</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <Pressable style={styles.button} onPress={onSignIn}>
-        <Text style={styles.buttonText}>Sign in</Text>
-      </Pressable>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={styles.container}>
+        <Text style={styles.label}>Sign in or Create an Account</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Pressable style={styles.button} onPress={onSignIn}>
+          <Text style={styles.buttonText}>Sign in</Text>
+        </Pressable>
+      </View>
+      <View style={styles.footer}>
+        <Text>Don't have an account?</Text>
+        <Pressable onPress={onSignup}>
+          <Text style={styles.signuptext}>Sign Up</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -72,6 +83,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+  },
+  footer: {
+    // backgroundColor: "white",
+    padding: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  signuptext: {
+    color: "#1d9bf0",
+    alignSelf: "center",
   },
 });
 export default SignIn;

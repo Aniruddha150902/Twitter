@@ -7,28 +7,21 @@ import {
   Image,
   TextInput,
   SafeAreaView,
-  useColorScheme,
   ActivityIndicator,
 } from "react-native";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTweetsApi } from "../lib/API/tweets";
-// import tweets from "../assets/data/tweets";
+import { useUserApi } from "../lib/API/user";
 import useColorStyles from "../Theme";
-const user = {
-  id: "u1",
-  username: "elonmusk",
-  name: "Elon Musk",
-  image:
-    "https://pbs.twimg.com/profile_images/1590968738358079488/IY9Gx6Ok.jpg",
-};
 export default () => {
   const { backgroundColor, textColor } = useColorStyles();
   const [text, setText] = useState("");
   const router = useRouter();
   const { createTweet } = useTweetsApi();
   const queryClient = useQueryClient();
+  const { user } = useUserApi();
   const { mutateAsync, isLoading, isError, error } = useMutation({
     mutationFn: createTweet,
     onSuccess: (data) => {
@@ -43,7 +36,6 @@ export default () => {
     },
   });
   const tweetsubmit = async () => {
-    // console.warn("Posting the Tweet: " + text);
     try {
       await mutateAsync({ content: text });
       setText("");

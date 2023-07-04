@@ -2,7 +2,6 @@ import {
   StyleSheet,
   View,
   FlatList,
-  useColorScheme,
   ActivityIndicator,
   Text,
 } from "react-native";

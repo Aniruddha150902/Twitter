@@ -1,4 +1,4 @@
-import { Text, useColorScheme } from "react-native";
+import { ActivityIndicator, Text, useColorScheme } from "react-native";
 import Tweet from "../../../../../components/Tweet";
 import { useSearchParams } from "expo-router";
 import { View } from "../../../../../components/Themed";
@@ -10,11 +10,12 @@ export default () => {
   //@ts-ignore
   const { getTweet } = useTweetsApi();
   const { id } = useSearchParams();
-  const { data } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["tweet", id],
     queryFn: () => getTweet(id as string),
   });
-
+  if (isLoading) return <ActivityIndicator />;
+  if (error instanceof Error) return <Text>{error.message}</Text>;
   if (!data) return <Text>Tweet {id} not found!</Text>;
   return (
     <View style={{ flex: 1, backgroundColor: backgroundColor }}>

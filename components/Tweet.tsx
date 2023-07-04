@@ -1,17 +1,11 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  useColorScheme,
-} from "react-native";
-import tweets from "../assets/data/tweets";
-import { tweetType, userType } from "../types";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+// import tweets from "../assets/data/tweets";
+import { tweetType } from "../types";
 import { Entypo } from "@expo/vector-icons";
 import IconButton from "./IconButtton";
 import { Link } from "expo-router";
 import useColorStyles from "../Theme";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 type propsType = {
   tweet: tweetType;
   // a:string

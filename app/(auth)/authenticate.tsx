@@ -34,6 +34,7 @@ const Authenticate = () => {
         placeholder="Code"
         value={code}
         onChangeText={setCode}
+        secureTextEntry
       />
       <Pressable style={styles.button} onPress={onConfirm}>
         <Text style={styles.buttonText}>confirm</Text>

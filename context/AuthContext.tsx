@@ -10,20 +10,20 @@ import * as SecureStore from "expo-secure-store";
 const AuthContext = createContext({});
 const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
-  console.log(authToken);
+  // console.log(authToken);
   const segemnts = useSegments();
-  console.log(segemnts);
+  // console.log(segemnts);
   const router = useRouter();
   useEffect(() => {
     const isAuthGroup = segemnts[0] === "(auth)";
     if (!authToken && !isAuthGroup) {
-      console.log("User is not yet authenticated and he cannot see this page");
+      // console.log("User is not yet authenticated and he cannot see this page");
       router.replace("/signIn");
     }
     if (authToken && isAuthGroup) {
       router.replace("/");
     }
-  }, [segemnts, authToken]);
+  }, [authToken]);
   useEffect(() => {
     const loadAuthToken = async () => {
       const res = await SecureStore.getItemAsync("authToken");
@@ -37,8 +37,14 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
     await SecureStore.setItemAsync("authToken", newToken);
     setAuthToken(newToken);
   };
+  const removeAuthToken = async () => {
+    await SecureStore.deleteItemAsync("authToken");
+    setAuthToken(null);
+  };
   return (
-    <AuthContext.Provider value={{ authToken, updateAuthToken }}>
+    <AuthContext.Provider
+      value={{ authToken, updateAuthToken, removeAuthToken }}
+    >
       {children}
     </AuthContext.Provider>
   );
