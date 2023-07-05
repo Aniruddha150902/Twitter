@@ -64,6 +64,13 @@ export default () => {
           headerTintColor: colorScheme === "dark" ? "white" : "black",
         }}
       />
+      <Drawer.Screen
+        name="EditProfile"
+        options={{
+          title: "Edit Profile",
+          headerTintColor: colorScheme === "dark" ? "white" : "black",
+        }}
+      />
     </Drawer>
   );
 };

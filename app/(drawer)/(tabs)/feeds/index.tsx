@@ -21,6 +21,8 @@ export default function FeedScreen() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["tweets"],
     queryFn: listTweets,
+    refetchInterval: 5000,
+    refetchIntervalInBackground: true,
   });
   // const [tweets, setTweets] = useState([]);
   // useEffect(() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import useColorStyles from "../Theme";
 import { useAuth } from "../context/AuthContext";
@@ -15,7 +15,7 @@ const Logout = () => {
   };
   return (
     <TouchableOpacity style={styles.container} onPress={logout}>
-      <Icon name="log-out" size={16} color={"#9e9ea0"} style={styles.icon} />
+      <Icon name="log-out" size={16} color={"gray"} style={styles.icon} />
       <Text style={styles.text}>Logout</Text>
     </TouchableOpacity>
   );
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignContent: "center",
-    color: "#9e9ea0",
+    color: "gray",
   },
   icon: { alignSelf: "center" },
   text: {
     fontSize: 16,
-    color: "#9e9ea0",
+    color: "gray",
     alignSelf: "center",
   },
 });

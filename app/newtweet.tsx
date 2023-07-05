@@ -15,6 +15,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTweetsApi } from "../lib/API/tweets";
 import { useUserApi } from "../lib/API/user";
 import useColorStyles from "../Theme";
+import AddImage from "../components/AddImage";
 export default () => {
   const { backgroundColor, textColor } = useColorStyles();
   const [text, setText] = useState("");
@@ -37,13 +38,17 @@ export default () => {
   });
   const tweetsubmit = async () => {
     try {
-      await mutateAsync({ content: text });
+      await mutateAsync({ content: text, image: selectedImage });
       setText("");
       router.back();
     } catch (e) {
       const err = e as Error;
       console.log("Error Posting the tweet : " + err.message);
     }
+  };
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const handleSelectedImage = (newImage: string) => {
+    setSelectedImage(newImage);
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: backgroundColor }}>
@@ -73,7 +78,8 @@ export default () => {
             }}
           />
         </View>
-        {isError && <Text>"Error Posting the tweet : "+error</Text>}
+        {isError && <Text>"Error Posting the tweet : "+{error}</Text>}
+        <AddImage onSetImage={handleSelectedImage} />
       </View>
     </SafeAreaView>
   );

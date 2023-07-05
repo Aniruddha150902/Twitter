@@ -4,6 +4,7 @@ export async function createUser(data: {
   username: string;
   email: string;
   bio: string;
+  image: string;
 }) {
   const res = await fetch(`${API_URL}/auth/create`, {
     method: "POST",

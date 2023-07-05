@@ -5,7 +5,6 @@ import { Entypo } from "@expo/vector-icons";
 import IconButton from "./IconButtton";
 import { Link } from "expo-router";
 import useColorStyles from "../Theme";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 type propsType = {
   tweet: tweetType;
   // a:string

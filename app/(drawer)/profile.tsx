@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -6,26 +5,36 @@ import {
   StyleSheet,
   ActivityIndicator,
   FlatList,
+  Pressable,
 } from "react-native";
 import useColorStyles from "../../Theme/index";
 import { Entypo } from "@expo/vector-icons";
 import { useUserApi } from "../../lib/API/user";
 import { useQuery } from "@tanstack/react-query";
 import Tweet from "../../components/Tweet";
-
+import { useRouter } from "expo-router";
 const Profile = () => {
   const { backgroundColor, textColor } = useColorStyles();
+  const router = useRouter();
   //@ts-ignore
   const { user, getUserTweet } = useUserApi();
   const id = user.id;
   const { data, isLoading, error } = useQuery({
     queryKey: ["User", id],
     queryFn: () => getUserTweet(id as String),
+    // refetchOnWindowFocus: "always",
+    refetchInterval: 5000,
+    refetchIntervalInBackground: true,
   });
   if (isLoading) return <ActivityIndicator />;
   if (error instanceof Error) return <Text>{error.message}</Text>;
   if (!data) return <Text>User {id} not found!</Text>;
   if (!data.tweet) return <Text>No Tweets Found!</Text>;
+  const onEdit = () => {
+    router.push({
+      pathname: "/(drawer)/EditProfile",
+    });
+  };
   return (
     <FlatList
       ListHeaderComponent={
@@ -52,12 +61,24 @@ const Profile = () => {
                 />
               </View>
               <View style={styles.nameContainer}>
-                <Text style={[styles.name, { color: textColor }]}>
-                  {user.name}
+                <View style={styles.bodyContainer}>
+                  <Text style={[styles.name, { color: textColor }]}>
+                    {data.name}
+                  </Text>
+                  <Pressable
+                    onPress={onEdit}
+                    style={[styles.editButton, { backgroundColor: textColor }]}
+                  >
+                    <Text style={[styles.editText, { color: backgroundColor }]}>
+                      Edit Profile
+                    </Text>
+                  </Pressable>
+                </View>
+                <Text style={styles.username}>{data.username}</Text>
+                <Text style={[styles.bio, { color: textColor }]}>
+                  {data.bio}
                 </Text>
-                <Text style={styles.username}>{user.username}</Text>
-                <Text style={styles.bio}>{user.bio}</Text>
-                <Text style={styles.date}>{user.createdAt}</Text>
+                <Text style={styles.date}>{data.createdAt}</Text>
               </View>
             </View>
           </View>
@@ -67,11 +88,7 @@ const Profile = () => {
               { backgroundColor: backgroundColor },
             ]}
           >
-            <Text
-              style={[styles.tweettext, { backgroundColor: backgroundColor }]}
-            >
-              Tweets
-            </Text>
+            <Text style={[styles.tweettext, { color: textColor }]}>Tweets</Text>
           </View>
         </>
       }
@@ -104,6 +121,11 @@ const styles = StyleSheet.create({
   nameContainer: {
     marginTop: 15,
   },
+  bodyContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   name: {
     fontSize: 25,
   },
@@ -120,11 +142,23 @@ const styles = StyleSheet.create({
   tweetContainer: {
     paddingVertical: 20,
     paddingHorizontal: 10,
-    width: "100%",
+    // width: "100%",
   },
   tweettext: {
     alignSelf: "center",
     fontSize: 25,
+  },
+  editButton: {
+    padding: 5,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    width: "34%",
+    height: 35,
+  },
+  editText: {
+    fontWeight: "600",
+    fontSize: 16,
+    alignSelf: "center",
   },
 });
 export default Profile;
