@@ -23,7 +23,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
     if (authToken && isAuthGroup) {
       router.replace("/");
     }
-  }, [authToken]);
+  }, [segemnts, authToken]);
   useEffect(() => {
     const loadAuthToken = async () => {
       const res = await SecureStore.getItemAsync("authToken");
