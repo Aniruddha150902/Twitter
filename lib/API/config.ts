@@ -1,4 +1,4 @@
-export const API_URL = "http://10.0.2.2:3000";
+export const API_URL = "https://twitter-backend-2ncl.onrender.com";
 // "http://127.0.0.1:4040";
 // "http://10.0.2.2:3000";
 // const url = "https://69a7-103-5-133-52.ngrok-free.app/tweet";

@@ -16,7 +16,7 @@ export async function createUser(data: {
   if (res.status === 401 || res.status === 400) {
     throw new Error("Unauthorized!Please sign up");
   }
-  if (res.status !== 200) throw new Error("Please Create An Account");
+  // if (res.status !== 200) throw new Error("Please Create An Account");
   return await res.json();
 }
 export async function login(data: { email: string }) {
