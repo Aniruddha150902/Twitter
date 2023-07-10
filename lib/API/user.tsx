@@ -11,7 +11,7 @@ import { useSegments } from "expo-router";
 const UserApiContext = createContext({});
 const UserApiContextProvider = ({ children }: PropsWithChildren) => {
   //@ts-ignore
-  const { authToken } = useAuth();
+  const { authToken, removeAuthToken } = useAuth();
   const [user, setUser] = useState({});
 
   async function getUserTweet(id: string) {
@@ -39,13 +39,16 @@ const UserApiContextProvider = ({ children }: PropsWithChildren) => {
             Authorization: `Bearer ${authToken}`,
           },
         });
-        if (res.status === 401 || res.status === 400)
+        if (res.status === 401 || res.status === 400) {
           throw new Error("Unauthorized!Please sign in");
-        if (res.status !== 200)
+        }
+        if (res.status !== 200) {
           throw new Error("Error Fetching the User Details");
+        }
         const userData = await res.json();
         setUser(userData);
       } catch (error) {
+        removeAuthToken();
         console.error("Error fetching user details:", error);
       }
     };

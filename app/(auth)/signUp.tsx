@@ -29,7 +29,7 @@ const TwitterSignUpPage: React.FC = () => {
       router.push({ pathname: "/signIn" });
     } catch (e) {
       const err = e as Error;
-      Alert.alert("Error : could not sign in " + err.message);
+      Alert.alert("Error : could not sign Up " + err.message);
     }
   };
   const onSignin = () => {
