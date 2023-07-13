@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal: 20,
     borderRadius: 50,
-    width: "34%",
+    width: "40%",
     height: 35,
   },
   editText: {

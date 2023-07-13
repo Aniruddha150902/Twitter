@@ -15,7 +15,7 @@ const Logout = () => {
   };
   return (
     <TouchableOpacity style={styles.container} onPress={logout}>
-      <Icon name="log-out" size={16} color={"gray"} style={styles.icon} />
+      <Icon name="log-out" size={16} color={"grey"} style={styles.icon} />
       <Text style={styles.text}>Logout</Text>
     </TouchableOpacity>
   );
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   icon: { alignSelf: "center" },
   text: {
     fontSize: 16,
-    color: "gray",
+    color: "grey",
     alignSelf: "center",
   },
 });

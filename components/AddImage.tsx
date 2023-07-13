@@ -31,24 +31,24 @@ export default function AddImage({
   return (
     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
       <View style={styles.imageContainer}>
-        {selectedImage ? (
-          <Image source={{ uri: selectedImage }} style={styles.image} />
-        ) : (
-          <Image
-            source={{ uri: placeholderImageSource }}
-            style={styles.image}
-          />
-        )}
         <Pressable
           style={[styles.button, { backgroundColor: "#fff" }]}
           onPress={pickImageAsync}
         >
-          <Ionicons
+          {selectedImage ? (
+            <Image source={{ uri: selectedImage }} style={styles.image} />
+          ) : (
+            <Image
+              source={{ uri: placeholderImageSource }}
+              style={styles.image}
+            />
+          )}
+          {/* <Ionicons
             name="images-outline"
             size={30}
             color={textColor}
             style={styles.icon}
-          />
+          /> */}
         </Pressable>
       </View>
     </View>
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: 60,
   },
   button: {
     padding: 10,

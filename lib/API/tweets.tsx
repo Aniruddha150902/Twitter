@@ -17,7 +17,7 @@ const TweetsApiContextProvider = ({ children }: PropsWithChildren) => {
       removeAuthToken();
       throw new Error("Unauthorized!Please sign in");
     }
-    if (res.status !== 200) throw new Error("Error Fetching the Tweets");
+    // if (res.status !== 200) throw new Error("Error Fetching the Tweets");
     return await res.json();
   }
   async function getTweet(id: string) {
@@ -29,7 +29,7 @@ const TweetsApiContextProvider = ({ children }: PropsWithChildren) => {
     });
     if (res.status === 401 || res.status === 400)
       throw new Error("Unauthorized!Please sign in");
-    if (res.status !== 200) throw new Error("Error Fetching the Tweet");
+    // if (res.status !== 200) throw new Error("Error Fetching the Tweet");
     return await res.json();
   }
   async function createTweet(data: { content: string; image: string }) {
@@ -45,7 +45,7 @@ const TweetsApiContextProvider = ({ children }: PropsWithChildren) => {
     if (res.status === 401 || res.status === 400) {
       throw new Error("Unauthorized!Please sign in");
     }
-    if (res.status !== 200) throw new Error("Error Posting the Tweet");
+    // if (res.status !== 200) throw new Error("Error Posting the Tweet");
     return await res.json();
   }
   return (

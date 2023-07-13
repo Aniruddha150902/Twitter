@@ -42,9 +42,9 @@ const UserApiContextProvider = ({ children }: PropsWithChildren) => {
         if (res.status === 401 || res.status === 400) {
           throw new Error("Unauthorized!Please sign in");
         }
-        if (res.status !== 200) {
-          throw new Error("Error Fetching the User Details");
-        }
+        // if (res.status !== 200) {
+        //   throw new Error("Error Fetching the User Details");
+        // }
         const userData = await res.json();
         setUser(userData);
       } catch (error) {
